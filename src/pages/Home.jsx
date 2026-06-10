@@ -9,7 +9,7 @@ export default function Home() {
 
     const fetchMovies = useCallback(async () => {
         const res = await fetch(
-            `https://www.omdbapi.com/?s=${search}&apikey=${API_KEY}`
+            `https://www.omdbapi.com/?s=${search}&apikey=${85130e4b}`
         );
         const data = await res.json();
         setMovies(data.Search || []);
