@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-const API_KEY = "YOUR_KEY";
+const API_KEY = "85130e4b";
 
 export default function Home() {
     const [search, setSearch] = useState("batman");
@@ -20,12 +20,18 @@ export default function Home() {
     }, [fetchMovies]);
 
     const filteredMovies = useMemo(() => {
-        return movies.filter(m => m.Poster !== "N/A");
+        return movies.filter((m) => m.Poster && m.Poster !== "N/A");
     }, [movies]);
+
+    const addToFavorites = (movie) => {
+        const stored = JSON.parse(localStorage.getItem("favorites")) || [];
+        localStorage.setItem("favorites", JSON.stringify([...stored, movie]));
+    };
 
     return (
         <div>
             <h1>Movie Search</h1>
+
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -34,10 +40,18 @@ export default function Home() {
 
             <div>
                 {filteredMovies.map((movie) => (
-                    <div key={movie.imdbID}>
+                    <div className="movie-card" key={movie.imdbID}>
                         <Link to={`/movie/${movie.imdbID}`}>
                             <h3>{movie.Title}</h3>
                         </Link>
+
+                        <img src={movie.Poster} alt={movie.Title} width="100" />
+
+                        <br />
+
+                        <button onClick={() => addToFavorites(movie)}>
+                            Add to Favorites
+                        </button>
                     </div>
                 ))}
             </div>

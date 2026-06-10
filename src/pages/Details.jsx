@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-const API_KEY = "YOUR_KEY";
+const API_KEY = "85130e4b";
 
 export default function Details() {
     const { id } = useParams();
@@ -9,23 +9,29 @@ export default function Details() {
     const titleRef = useRef();
 
     useEffect(() => {
-        fetch(`https://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`)
-            .then(res => res.json())
-            .then(data => setMovie(data));
+        fetch(`https://www.omdbapi.com/?i=${id}&apikey=85130e4b`)
+
+        // fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=85130e4b`)
+            .then((res) => res.json())
+            .then((data) => setMovie(data));
     }, [id]);
 
     useEffect(() => {
         if (titleRef.current) {
-            titleRef.current.focus(); // useRef example
+            titleRef.current.focus();
         }
     }, [movie]);
 
-    if (!movie) return <div>Loading...</div>;
+    if (!movie) return <p>Loading...</p>;
 
     return (
         <div>
             <h2 tabIndex="0" ref={titleRef}>{movie.Title}</h2>
+            <img src={movie.Poster} width="200" />
             <p>{movie.Plot}</p>
         </div>
     );
 }
+
+
+// http://www.omdbapi.com/?i=tt3896198&apikey=85130e4b
